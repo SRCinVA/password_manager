@@ -5,7 +5,10 @@ def view():# 'pass' just prevents indentation errors
                                             # 'r' is 'read mode' (we don't want to change it) 
                                             # 'as f' names that file ('f')
         for line in f.readlines():          # notice that readlines() is a method
-            print(line.rstrip())            # oddly you have to 'rstrip' the carriage retun off of it.)
+            data = line.rstrip()            # oddly you have to 'rstrip' the carriage retun off of it.)
+            user, passw = data.split("|")   # it splits a string everywhere that character is found and drops the pieces into a list.
+                                            # the element of the list is assigned to user, while the second is assigned to passw.
+            print("User:", user, "Password:", passw)             
 
 def add():
     name = input("Account Name: ")
