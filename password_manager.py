@@ -1,4 +1,22 @@
+from cryptography.fernet import Fernet
+
 master_pwd = input("What is the master password? ")
+
+'''  # you just need to run it once
+     # also, a multi-line comment is three quote marks
+
+def write_key():
+    key = Fernet.generate_key()
+    with open("key.key", "wb") as key_file:  # 'wb' means "write bytes"
+        key_file.write(key)
+'''
+
+# now we need to load the key
+def load_key():
+    file = open("key.key", "rb").read()
+    key file.read()
+    file.close()
+    return
 
 def view():# 'pass' just prevents indentation errors
     with open('passwords.txt', 'r') as f:   # 'with' opens the file, let's us complete tasks, and then closes that file automatically
@@ -8,7 +26,7 @@ def view():# 'pass' just prevents indentation errors
             data = line.rstrip()            # oddly you have to 'rstrip' the carriage retun off of it.)
             user, passw = data.split("|")   # it splits a string everywhere that character is found and drops the pieces into a list.
                                             # the element of the list is assigned to user, while the second is assigned to passw.
-            print("User:", user, "Password:", passw)             
+            print("User:", user, "| Password:", passw)             
 
 def add():
     name = input("Account Name: ")
