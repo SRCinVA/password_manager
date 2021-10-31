@@ -1,22 +1,25 @@
 from cryptography.fernet import Fernet
 
-master_pwd = input("What is the master password? ")
-
-'''  # you just need to run it once
-     # also, a multi-line comment is three quote marks
+'''  
+# you just need to run this once to get the key
+ # also, a multi-line comment is three quote marks
 
 def write_key():
     key = Fernet.generate_key()
     with open("key.key", "wb") as key_file:  # 'wb' means "write bytes"
         key_file.write(key)
 '''
-
-# now we need to load the key
+# now we need to load the key first, because we're going to call the fucntion directly below it.
 def load_key():
     file = open("key.key", "rb").read()
     key file.read()
     file.close()
-    return
+    return key   # to make the key available to outside the function
+
+master_pwd = input("What is the master password? ")
+key = load_key() + master_pwd.bytes # for reasons he doesn't explain, key and fer need to come after master_pwd
+                                    # we'll be storing this in bytes and then concatenate the two strings
+fer = Fernet(key)                   # this initiaizes the encryption module
 
 def view():# 'pass' just prevents indentation errors
     with open('passwords.txt', 'r') as f:   # 'with' opens the file, let's us complete tasks, and then closes that file automatically
