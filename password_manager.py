@@ -11,14 +11,14 @@ def write_key():
 '''
 # now we need to load the key first, because we're going to call the fucntion directly below it.
 def load_key():
-    file = open("key.key", "rb").read()
-    key file.read()
+    file = open("key.key", "rb")
+    key = file.read()
     file.close()
     return key   # to make the key available to outside the function
 
 master_pwd = input("What is the master password? ")
-key = load_key() + master_pwd.bytes # for reasons he doesn't explain, key and fer need to come after master_pwd
-                                    # we'll be storing this in bytes and then concatenate the two strings
+key = load_key() + master_pwd.encode() # for reasons he doesn't explain, key and fer need to come after master_pwd
+                                    # we'll be storing this in bytes (using .encode()) and then concatenate the two strings
 fer = Fernet(key)                   # this initiaizes the encryption module
 
 def view():# 'pass' just prevents indentation errors
@@ -29,7 +29,7 @@ def view():# 'pass' just prevents indentation errors
             data = line.rstrip()            # oddly you have to 'rstrip' the carriage retun off of it.)
             user, passw = data.split("|")   # it splits a string everywhere that character is found and drops the pieces into a list.
                                             # the element of the list is assigned to user, while the second is assigned to passw.
-            print("User:", user, "| Password:", passw)             
+            print("User:", user, "| Password:", fer.decrypt(passw.encode())) # look at encrypt methodology below for more explanation.            
 
 def add():
     name = input("Account Name: ")
@@ -38,8 +38,9 @@ def add():
     with open('passwords.txt', 'a') as f:   # 'with' opens the file, let's us complete tasks, and then closes that file automatically
                                             # 'a' is 'append mode' (other are 'w' and 'r') 
                                             # 'as f' names that file ('f')
-        f.write(name + "|" + pwd + '\n')    # add a line break
-
+        # when writing passwords, they are encoded first and then encrypted (notice the 'fer.' prefix). Convert it all to a string.
+        f.write(name + "|" + fer.encrypt(pwd.encode()).decode() + '\n')    # add a line break
+                                                                           # this weird 'decode()' converts it from "bit string" 
 while True:
     mode = input("Would you like to add a new password or view existing ones ('view' or 'add'). Press 'q' to quit: ").lower()
     
