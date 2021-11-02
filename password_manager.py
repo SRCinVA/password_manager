@@ -29,8 +29,9 @@ def view():# 'pass' just prevents indentation errors
             data = line.rstrip()            # oddly you have to 'rstrip' the carriage retun off of it.)
             user, passw = data.split("|")   # it splits a string everywhere that character is found and drops the pieces into a list.
                                             # the element of the list is assigned to user, while the second is assigned to passw.
-            print("User:", user, "| Password:", fer.decrypt(passw.encode())) # look at encrypt methodology below for more explanation.            
-
+            print("User:", user, "| Password:", 
+                fer.decrypt(passw.encode()).decode()) # first we encode that string into bits, then decrypt it.          
+                                            # strangely, outside the print statement you decode it so it takes away the bit ('b' designation)
 def add():
     name = input("Account Name: ")
     pwd = input("Password: ")
